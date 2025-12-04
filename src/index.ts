@@ -1,6 +1,7 @@
 import { Elysia, t } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { jwt } from "@elysiajs/jwt";
+import { cors } from "@elysiajs/cors";
 import { PrismaClient } from "@prisma/client";
 import { UserPlain, UserPlainInputCreate, UserPlainInputUpdate } from "./generated/prismabox/User";
 
@@ -11,6 +12,7 @@ const prisma = new PrismaClient({});
 const UserResponse = t.Omit(UserPlain, ['password']);
 
 const app = new Elysia()
+  .use(cors())
   .use(swagger())
   .use(
     jwt({
@@ -193,7 +195,7 @@ const app = new Elysia()
         }
       )
   )
-  .listen(3000);
+  .listen(3333);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
